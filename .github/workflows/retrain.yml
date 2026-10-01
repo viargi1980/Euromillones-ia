@@ -41,8 +41,8 @@ jobs:
 
       - name: Commit automático
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name "viargi1980"
+          git config user.email "viargi1980@gmail.com"
 
           git add .
 
