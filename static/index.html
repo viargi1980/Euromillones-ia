@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicción Euromillones IA</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            text-align: center;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #111827;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .card {
+            background: white;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.1);
+        }
+
+        .numero {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            margin: 5px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .estrella {
+            display: inline-block;
+            width: 55px;
+            height: 55px;
+            line-height: 55px;
+            margin: 5px;
+            border-radius: 50%;
+            background: #f59e0b;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        th {
+            background: #e5e7eb;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🎲 Predicción Euromillones IA</h1>
+
+    <button onclick="cargarPrediccion()">
+        Generar Predicción
+    </button>
+
+    <div id="resultado"></div>
+
+    <script>
+
+        async function cargarPrediccion() {
+
+            const resultado = document.getElementById("resultado");
+
+            resultado.innerHTML = "Cargando...";
+
+            try {
+
+                const response = await fetch("/predict-next");
+                const data = await response.json();
+                console.log(data);
+
+                if (data.error) {
+                    resultado.innerHTML =
+                        `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                    return;
+                }
+
+                let html = `
+                    <div class="card">
+
+                        <h2>Combinación Recomendada</h2>
+
+                        <div>
+                            ${data.numeros.map(n =>
+                                `<span class="numero">${n}</span>`
+                            ).join("")}
+                        </div>
+
+                        <br>
+
+                        <div>
+                            ${data.estrellas.map(e =>
+                                `<span class="estrella">⭐${e}</span>`
+                            ).join("")}
+                        </div>
+
+                        <h2 style="margin-top:30px">
+                            Top 10 números más probables
+                        </h2>
+
+                        <table>
+                            <tr>
+                                <th>Número</th>
+                                <th>Probabilidad</th>
+                            </tr>
+                `;
+
+                data.top_numeros.forEach(item => {
+
+                    html += `
+                        <tr>
+                            <td>${item.numero}</td>
+                            <td>${item.probabilidad}</td>
+                        </tr>
+                    `;
+                });
+
+                html += `
+                        </table>
+
+                        <h2 style="margin-top:30px">
+                            Top estrellas
+                        </h2>
+
+                        <table>
+                            <tr>
+                                <th>Estrella</th>
+                                <th>Probabilidad</th>
+                            </tr>
+                `;
+
+                data.top_estrellas.forEach(item => {
+
+                    html += `
+                        <tr>
+                            <td>${item.estrella}</td>
+                            <td>${item.probabilidad}</td>
+                        </tr>
+                    `;
+                });
+
+                html += `
+                        </table>
+
+                    </div>
+                `;
+
+                resultado.innerHTML = html;
+
+            }
+            catch (error) {
+
+                resultado.innerHTML =
+                    `<h3 style="color:red">${error}</h3>`;
+            }
+        }
+
+        window.onload = cargarPrediccion;
+
+    </script>
+
+</body>
+
+</html>

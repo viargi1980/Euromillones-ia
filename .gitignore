@@ -1,0 +1,7 @@
+venv311/
+venv/
+__pycache__/
+*.pyc
+
+modelo_numeros.pkl
+modelo_estrellas.pkl

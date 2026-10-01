@@ -1,0 +1,48 @@
+name: Reentrenar Euromillones
+
+on:
+  schedule:
+    # Sábados a las 04:00 UTC
+    - cron: '0 4 * * 6'
+
+  # Permite lanzarlo manualmente desde GitHub
+  workflow_dispatch:
+
+jobs:
+
+  retrain:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias
+        run: |
+          pip install -r requirements.txt
+
+      - name: Descargar sorteos
+        run: |
+          python actualizar_datos.py
+
+      - name: Reentrenar modelos
+        run: |
+          python AutoTrain.py
+
+      - name: Commit automático
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add .
+
+          git diff --staged --quiet || git commit -m "Actualización automática"
+
+          git push
