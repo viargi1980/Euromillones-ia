@@ -30,7 +30,7 @@ jobs:
 
       - name: Descargar sorteos
         run: |
-          python actualizar_datos.py
+          python main.py
 
       - name: Reentrenar modelos
         run: |
