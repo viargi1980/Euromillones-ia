@@ -1,0 +1,77 @@
+{
+    "numeros": [
+        3,
+        5,
+        19,
+        31,
+        37
+    ],
+    "estrellas": [
+        3,
+        6
+    ],
+    "top_numeros": [
+        {
+            "numero": 37,
+            "probabilidad": 0.5933
+        },
+        {
+            "numero": 5,
+            "probabilidad": 0.57
+        },
+        {
+            "numero": 31,
+            "probabilidad": 0.5567
+        },
+        {
+            "numero": 3,
+            "probabilidad": 0.5133
+        },
+        {
+            "numero": 19,
+            "probabilidad": 0.51
+        },
+        {
+            "numero": 7,
+            "probabilidad": 0.5067
+        },
+        {
+            "numero": 24,
+            "probabilidad": 0.5
+        },
+        {
+            "numero": 36,
+            "probabilidad": 0.5
+        },
+        {
+            "numero": 50,
+            "probabilidad": 0.4833
+        },
+        {
+            "numero": 49,
+            "probabilidad": 0.47
+        }
+    ],
+    "top_estrellas": [
+        {
+            "estrella": 3,
+            "probabilidad": 0.51
+        },
+        {
+            "estrella": 6,
+            "probabilidad": 0.51
+        },
+        {
+            "estrella": 9,
+            "probabilidad": 0.51
+        },
+        {
+            "estrella": 2,
+            "probabilidad": 0.4967
+        },
+        {
+            "estrella": 8,
+            "probabilidad": 0.48
+        }
+    ]
+}

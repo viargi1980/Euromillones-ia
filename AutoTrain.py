@@ -3,6 +3,7 @@ import numpy as np
 import joblib
 from pathlib import Path
 import pickle
+import json
 
 
 from sklearn.ensemble import RandomForestClassifier
@@ -259,6 +260,41 @@ numeros_pred = sorted(
 estrellas_pred = sorted(
     [x[0] for x in probs_estrellas[:2]]
 )
+
+
+
+# ==========================================
+# GENERAR JSON PARA LA WEB
+# ==========================================
+
+prediccion = {
+    "numeros": numeros_pred,
+    "estrellas": estrellas_pred,
+    "top_numeros": [
+        {
+            "numero": numero,
+            "probabilidad": round(float(prob), 4)
+        }
+        for numero, prob in probs_numeros[:10]
+    ],
+    "top_estrellas": [
+        {
+            "estrella": estrella,
+            "probabilidad": round(float(prob), 4)
+        }
+        for estrella, prob in probs_estrellas[:5]
+    ]
+}
+
+with open("prediccion.json", "w", encoding="utf-8") as f:
+    json.dump(
+        prediccion,
+        f,
+        ensure_ascii=False,
+        indent=4
+    )
+
+print("prediccion.json generado.")
 
 
 
