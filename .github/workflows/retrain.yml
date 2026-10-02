@@ -2,23 +2,18 @@ name: Reentrenar Euromillones
 
 on:
   schedule:
-    # Sábados a las 04:00 UTC
     - cron: '0 4 * * 6'
 
-  # Permite lanzarlo manualmente desde GitHub
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-
   retrain:
-
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Descargar repositorio
         uses: actions/checkout@v4
 
@@ -38,6 +33,19 @@ jobs:
       - name: Reentrenar modelos
         run: |
           python AutoTrain.py
+
+      - name: Crear tag
+        run: echo "TAG=models-${{ github.run_number }}" >> $GITHUB_ENV
+
+      - name: Crear release y subir PKL
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG }}
+          generate_release_notes: true
+          files: |
+            artifacts/*.pkl
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Commit automático
         run: |

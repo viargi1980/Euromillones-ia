@@ -5,3 +5,5 @@ __pycache__/
 
 modelo_numeros.pkl
 modelo_estrellas.pkl
+
+artifacts/

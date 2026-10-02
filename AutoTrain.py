@@ -1,6 +1,9 @@
 import pandas as pd
 import numpy as np
 import joblib
+from pathlib import Path
+import pickle
+
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
@@ -172,18 +175,23 @@ for estrella in range(1, 13):
 
 print("OK")
 
+
+
+
 # ==========================================
 # GUARDAR
 # ==========================================
 
+Path("artifacts").mkdir(exist_ok=True)
+
 joblib.dump(
     modelos_numeros,
-    "modelo_numeros.pkl"
+    "artifacts/modelos_numeros.pkl"
 )
 
 joblib.dump(
     modelos_estrellas,
-    "modelo_estrellas.pkl"
+    "artifacts/modelos_estrellas.pkl"
 )
 
 print()
